@@ -4,4 +4,26 @@ class Api::V1::IdeasController < ApiBaseController
     render json: Idea.all
   end
 
+  def show
+    render json: Idea.find(params["id"])
+  end
+
+  def create
+    render json: Idea.create(idea_params)
+  end
+
+  def edit
+    render json: Idea.update(params["id"], idea_params)
+  end
+
+  def destroy
+    render json: Idea.destroy(params[:id])
+  end
+
+  private
+
+  def idea_params
+    params.permit(:title, :body, :quality)
+  end
+
 end
