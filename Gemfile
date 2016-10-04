@@ -52,6 +52,8 @@ end
 
 gem 'faraday'
 gem 'responders'
+gem 'bootstrap-sass'
+gem 'pry'
 
 gem 'rails_12factor', group: :production
 

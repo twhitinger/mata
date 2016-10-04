@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: First Title
+  body: First Body
+  quality: First Quality
+
+two:
+  title: Second Title
+  body: Second Body
+  quality: Second Quality
