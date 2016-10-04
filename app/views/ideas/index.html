@@ -1,1 +1,32 @@
-bye
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>
+
+  $(document).ready(function(){
+    $("button").click(function(){
+    $.ajax({
+      type: "GET",
+      url: "https://mata-data.herokuapp.com/api/v1/ideas",
+      crossDomain: true,
+      xhrFields: {
+        withCredentials: true
+      },
+      success: function(data) {
+        console.log(data);
+        var idea = 'Title : '+data.title ;
+        idea += 'Body : '+data.body ;
+        idea += 'Quality : '+data.quality;
+        $("#idea-data").append(idea);
+      }
+     })
+    });
+  });
+  </script>
+</head>
+<body>
+  <button>Send an HTTP GET request to a page and get the result back</button>
+  <div id="idea-data"></div>
+</body>
+</html>
