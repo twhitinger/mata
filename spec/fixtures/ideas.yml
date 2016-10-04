@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  body: MyString
-  quality: MyString
+  title: First Title
+  body: First Body
+  quality: First Quality
 
 two:
-  title: MyString
-  body: MyString
-  quality: MyString
+  title: Second Title
+  body: Second Body
+  quality: Second Quality
