@@ -12,7 +12,7 @@ class Api::V1::IdeasController < ApiBaseController
     render json: Idea.create(idea_params)
   end
 
-  def edit
+  def update
     render json: Idea.update(params["id"], idea_params)
   end
 
