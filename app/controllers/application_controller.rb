@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
-  skip_before_filter :verify_authenticity_token ,:only => [:index]
+  # skip_before_filter :verify_authenticity_token ,:only => [:index]
   before_filter :cor
   def cor
     if request.headers["HTTP_ORIGIN"]
