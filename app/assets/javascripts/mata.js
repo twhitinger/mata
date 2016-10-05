@@ -1,33 +1,10 @@
-// // look at this shit
-//
-//
-// See a list of all existing ideas, including the title, body, and quality for each idea.
-// make a call to my api end point '/api/v1/ideas'
-// loop through the objects displaying each title body and quality
 
-
-// Ideas should appear in descending chronological order (with the most recently created idea at the top).
-// display most recent first, easily solved calling reveres.
-
-// function returnIndex(){
-//
-//   $.ajax({
-//     url: "https://mata-data.herokuapp.com/api/v1/ideas",
-//     method: "get"
-//   });
-// }
-//
-// $.get("https://mata-data.herokuapp.com/api/v1/ideas", function(data, status) {
-//   console.log(data, status)
-// });
 
 $(document).ready(function(){
   fetchIdeas()
   deleteIdea()
   createIdea()
-  // resetForm()
 
-  // $("button").click(function(){
   function fetchIdeas(){
     $.ajax({
       type: "GET",
@@ -41,8 +18,8 @@ $(document).ready(function(){
       })
     }
 
-    function handleError(data){console.log(data)}
 
+   function handleError(data){console.log(data)}
 
     function createIdeaHTML(data){
       $("#latest-idea").prepend(
@@ -79,7 +56,8 @@ $(document).ready(function(){
         var ideaParams = {
           idea: {
             title: $("#idea-title").val(),
-            body: $("#idea-body").val()
+            body: $("#idea-body").val(),
+            quality: "Swill"
           }
         }
         $("input[type=text], textarea").val("")
@@ -89,11 +67,6 @@ $(document).ready(function(){
       })
     }
 
-    // function resetForm(){
-    //   $("#create-post").on("click",function() {
-    //     $("input[type=text], textarea").val("")
-    //   });
-    // }
 
     function renderIdeas(data){
 
