@@ -22,10 +22,13 @@
 // });
 
 $(document).ready(function(){
+  fetchIdeas()
   deleteIdea()
   createIdea()
+  // resetForm()
 
-  $("button").click(function(){
+  // $("button").click(function(){
+  function fetchIdeas(){
     $.ajax({
       type: "GET",
       url: "/api/v1/ideas",
@@ -34,10 +37,9 @@ $(document).ready(function(){
         withCredentials: true
       },
       success: function(data) {
-        console.log(data);
         data.map(createIdeaHTML) }
       })
-    })
+    }
 
     function handleError(data){console.log(data)}
 
@@ -80,11 +82,18 @@ $(document).ready(function(){
             body: $("#idea-body").val()
           }
         }
+        $("input[type=text], textarea").val("")
         $.post("/api/v1/ideas", ideaParams)
         .then(createIdeaHTML)
         .then(renderIdeas)
       })
     }
+
+    // function resetForm(){
+    //   $("#create-post").on("click",function() {
+    //     $("input[type=text], textarea").val("")
+    //   });
+    // }
 
     function renderIdeas(data){
 
