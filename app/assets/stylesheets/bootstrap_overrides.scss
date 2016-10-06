@@ -1,0 +1,23 @@
+body {
+background-image: image-url('cartoon-thinking.jpeg');
+background-repeat: no-repeat;
+background-size: 100%;
+}
+
+
+.well {
+   background-color: rgba(245, 245, 245, 0.6) !important;
+}
+
+
+.search-form {
+  margin: 0 1rem;
+  flex-grow: 1; /* <-- THE SECRET SAUCE! */
+  min-width: 18rem;
+}
+
+.search-box {
+  width: 100%;
+  padding: .4rem;
+  background-color: #ffb;
+}
