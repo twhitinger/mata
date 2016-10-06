@@ -7,7 +7,9 @@ $(document).ready(function(){
   createIdea()
   getTitleUpdate()
   getBodyUpdate()
-  // $('#title').on("change", function(e) {
+  upvoteIdea()
+  downvoteIdea()
+
   function getTitleUpdate(){
     $(document).on("blur", "#update-title",function(){
       var ideaParams = {
@@ -32,6 +34,54 @@ $(document).ready(function(){
     });
   }
 
+  function upvoteIdea(){
+    $("#latest-idea").on("click", "#upvote-idea", function(e) {
+
+      id = $(".idea")[0].dataset.id
+      text = $("#update-quality").text()
+      if (text === "Swill") {
+
+        var ideaParams = {
+          idea: {
+            quality: "Plausible"
+          }
+        }
+        updateApi(ideaParams, id)
+      } else if (text === "Plausible") {
+        var ideaParams = {
+          idea: {
+            quality: "Genius"
+          }
+        }
+      }
+        updateApi(ideaParams, id)
+    });
+  }
+
+  function downvoteIdea(){
+
+    $("#latest-idea").on("click", "#downvote-idea", function(e) {
+
+      id = $(".idea")[0].dataset.id
+      text = $("#update-quality").text()
+      if (text === "Plausible") {
+
+        var ideaParams = {
+          idea: {
+            quality: "Swill"
+          }
+        }
+        updateApi(ideaParams, id)
+      } else if (text === "Genius") {
+        var ideaParams = {
+          idea: {
+            quality: "Plausible"
+          }
+        }
+      }
+        updateApi(ideaParams, id)
+    });
+  }
 
 
   function updateApi(ideaParams, id) {
@@ -40,7 +90,10 @@ $(document).ready(function(){
       type: "PUT",
       dataType: "JSON",
       data: ideaParams,
-      error: error => console.log(error)
+      success: function(data) {
+        $("#update-quality").text(data.quality)
+      }
+
     })
   }
 
@@ -66,12 +119,14 @@ $(document).ready(function(){
         "<div class ='well'>"
         + "<div class ='idea' data-id='"
         + data.id + "'>"
-        + "<h2>Title</h2><p id='update-title' contenteditable=true> " +data.title + "</p>"
+        + "<h2>Title</h2><p id='update-title' contenteditable=true> " +data.title
         + "<h2>Body</h2><p id='update-body' contenteditable=true> " +data.body + "</p>"
-        + "<h2>Quality</h2><p> "+data.quality + "</p></div>"
+        + "<h2>Quality</h2><p id='update-quality'>"+data.quality + "</p></div>"
+        + "<button style='color:red' id='upvote-idea' class='glyphicon glyphicon-fire'></button>"
+        + "<button style='color:blue' id='downvote-idea' class='glyphicon glyphicon-hand-down'></button>"
         + "<button data-id="
-        + data.id
-        + " id='delete-post' name='button-fetch' class='btn btn-default btn-xs'>Delete</button>"
+        + data.id + " "
+        + "id='delete-post' name='button-fetch' class='btn btn-danger btn-xs'>Delete</button>"
         + "</div>"
         + "</div>"
       );
@@ -79,40 +134,9 @@ $(document).ready(function(){
 
 
 
-
-
-    // var newTitle = ''
-    // function grabNewTitle() {
-    //   $('#title').on("change", function(e) {
-    //     newTitle = e.target.textContent
-    //   })
-    // }
-
-    // var newBody = ''
-    // function grabNewBody() {
-    //   $('#title').on("change", function(e) {
-    //     newTitle = e.target.textContent
-    //   })
-    // }
-
-    // function updateIdea() {
-    //   $('#ideas').on('blur', function() {
-    //     if (newTitle) {
-    //       // someAjax that updates title
-    //       newTitle = ''
-    //     }
-    //     if (newBody) {
-    //       // some ajax that updates body
-    //       newBody = ''
-    //     }
-    //   })
-    // }
-
-
-
     function deleteIdea(){
       $("#latest-idea").on("click", "#delete-post", function(){
-        var $idea = this.previousSibling
+        var $idea = this
         var $button = this.closest("div")
         $.ajax({
           url: "/api/v1/ideas/" + $idea.dataset.id,
