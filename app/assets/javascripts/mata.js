@@ -10,6 +10,24 @@ $(document).ready(function(){
   upvoteIdea()
   downvoteIdea()
 
+
+  $("#search-bar").on("keyup", function (){
+  var currentSearch = this.value.toLowerCase();
+  $('.idea').each(function (_index, idea) {
+    $idea = $(idea);
+    if ( $idea.children(".idea-title").text().toLowerCase().indexOf(currentSearch) !== -1 ) {
+      $idea.show();
+    } else if ( $idea.children(".idea-body").text().toLowerCase().indexOf(currentSearch) !== -1 ){
+      $idea.show();
+    }
+    else {
+      $(this).parent('div').fadeOut();
+    }
+  });
+});
+
+
+
   function getTitleUpdate(){
     $(document).on("blur", "#update-title",function(){
       var ideaParams = {
@@ -119,8 +137,8 @@ $(document).ready(function(){
         "<div class ='well'>"
         + "<div class ='idea' data-id='"
         + data.id + "'>"
-        + "<h2>Title</h2><p id='update-title' contenteditable=true> " +data.title
-        + "<h2>Body</h2><p id='update-body' contenteditable=true> " +data.body + "</p>"
+        + "<h2>Title</h2><p class='idea-title'id='update-title' contenteditable=true> " +data.title
+        + "<h2>Body</h2><p class='idea-body' id='update-body' contenteditable=true> " +data.body + "</p>"
         + "<h2>Quality</h2><p id='update-quality'>"+data.quality + "</p></div>"
         + "<button style='color:red' id='upvote-idea' class='glyphicon glyphicon-fire'></button>"
         + "<button style='color:blue' id='downvote-idea' class='glyphicon glyphicon-hand-down'></button>"
