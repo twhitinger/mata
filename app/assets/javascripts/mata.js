@@ -26,7 +26,7 @@ $(document).ready(function(){
         }
       });
     });
- }
+  }
 
 
 
@@ -55,10 +55,11 @@ $(document).ready(function(){
   }
 
   function upvoteIdea(){
-    $("#latest-idea").on("click", "#upvote-idea", function(e) {
 
-      id = $(".idea")[0].dataset.id
-      text = $("#update-quality").text()
+    $("#latest-idea").on("click", "#upvote-idea", function(e) {
+      id = this.dataset.id
+      text = $(this).parent('div')[0].getElementsByClassName("idea")[0]
+      .getElementsByClassName("idea-quality")[0].innerHTML
       if (text === "Swill") {
 
         var ideaParams = {
@@ -66,6 +67,8 @@ $(document).ready(function(){
             quality: "Plausible"
           }
         }
+        $(this).parent('div')[0].getElementsByClassName("idea")[0]
+        .getElementsByClassName("idea-quality")[0].innerHTML = "Plausible"
         updateApi(ideaParams, id)
       } else if (text === "Plausible") {
         var ideaParams = {
@@ -73,17 +76,20 @@ $(document).ready(function(){
             quality: "Genius"
           }
         }
+        $(this).parent('div')[0].getElementsByClassName("idea")[0]
+        .getElementsByClassName("idea-quality")[0].innerHTML = "Genius"
+        updateApi(ideaParams, id)
       }
-      updateApi(ideaParams, id)
     });
   }
 
   function downvoteIdea(){
 
     $("#latest-idea").on("click", "#downvote-idea", function(e) {
-
-      id = $(".idea")[0].dataset.id
-      text = $("#update-quality").text()
+      debugger
+      id = this.dataset.id
+      text = $(this).parent('div')[0].getElementsByClassName("idea")[0]
+      .getElementsByClassName("idea-quality")[0].innerHTML
       if (text === "Plausible") {
 
         var ideaParams = {
@@ -91,6 +97,8 @@ $(document).ready(function(){
             quality: "Swill"
           }
         }
+        $(this).parent('div')[0].getElementsByClassName("idea")[0]
+        .getElementsByClassName("idea-quality")[0].innerHTML = "Swill"
         updateApi(ideaParams, id)
       } else if (text === "Genius") {
         var ideaParams = {
@@ -98,8 +106,11 @@ $(document).ready(function(){
             quality: "Plausible"
           }
         }
+        $(this).parent('div')[0].getElementsByClassName("idea")[0]
+        .getElementsByClassName("idea-quality")[0].innerHTML = "Plausible"
+        updateApi(ideaParams, id)
       }
-      updateApi(ideaParams, id)
+
     });
   }
 
@@ -110,9 +121,10 @@ $(document).ready(function(){
       type: "PUT",
       dataType: "JSON",
       data: ideaParams,
-      success: function(data) {
-        $("#update-quality").text(data.quality)
-      }
+      // success: function(data) {
+      //   debugger
+      //   $("#update-quality").text(data.quality)
+      // }
 
     })
   }
@@ -141,9 +153,11 @@ $(document).ready(function(){
         + data.id + "'>"
         + "<h2>Title</h2><p class='idea-title'id='update-title' contenteditable=true> " +data.title
         + "<h2>Body</h2><p class='idea-body' id='update-body' contenteditable=true> " +data.body + "</p>"
-        + "<h2>Quality</h2><p id='update-quality'>"+data.quality + "</p></div>"
-        + "<button style='color:red' id='upvote-idea' class='glyphicon glyphicon-fire'></button>"
-        + "<button style='color:blue' id='downvote-idea' class='glyphicon glyphicon-hand-down'></button>"
+        + "<h2>Quality</h2><p class='idea-quality' id='update-quality'>"+data.quality + "</p></div>"
+        + "<button data-id="
+        + data.id + " style='color:red' id='upvote-idea' class='glyphicon glyphicon-fire'></button>"
+        + "<button data-id="
+        + data.id + " style='color:blue' id='downvote-idea' class='glyphicon glyphicon-hand-down'></button>"
         + "<button data-id="
         + data.id + " "
         + "id='delete-post' name='button-fetch' class='btn btn-danger btn-xs'>Delete</button>"
